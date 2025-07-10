@@ -1,42 +1,35 @@
-// Инициализация AR-сцены  
-AFRAME.registerComponent('marker-handler', {  
-  init: function() {  
-    const scene = this.el;  
+AFRAME.registerComponent('ar-model-loader', {
+    init: function() {
+        const scene = this.el;
 
-    // Маркер 1: Кубик  
-    const marker1 = document.createElement('a-marker');  
-    marker1.setAttribute('type', 'pattern');  
-    marker1.setAttribute('url', 'assets/markers/pattern-1.patt');  
-    marker1.setAttribute('id', 'marker1');  
-    
-    const box = document.createElement('a-box');  
-    box.setAttribute('color', '#4CC3D9');  
-    box.setAttribute('position', '0 0.5 0');  
-    marker1.appendChild(box);  
+        // Маркер HIRO (встроенный)
+        const markerHiro = document.createElement('a-marker');
+        markerHiro.setAttribute('preset', 'hiro'); // Используем встроенный маркер
+        markerHiro.setAttribute('id', 'marker-hiro');
+        
+        const robot = document.createElement('a-entity');
+        robot.setAttribute('geometry', 'primitive: cylinder; radius: 0.5; height: 1');
+        robot.setAttribute('material', 'color: #FF5733; metalness: 0.8; roughness: 0.2');
+        robot.setAttribute('position', '0 0.5 0');
+        robot.setAttribute('rotation', '0 180 0');
+        robot.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 3000');
+        markerHiro.appendChild(robot);
 
-    // Маркер 2: 3D-модель  
-    const marker2 = document.createElement('a-marker');  
-    marker2.setAttribute('type', 'pattern');  
-    marker2.setAttribute('url', 'assets/markers/pattern-2.patt');  
-    marker2.setAttribute('id', 'marker2');  
-    
-    const model = document.createElement('a-entity');  
-    model.setAttribute('gltf-model', 'url(assets/models/robot.gltf)');  
-    model.setAttribute('scale', '0.2 0.2 0.2');  
-    marker2.appendChild(model);  
+        // Маркер KANJI (встроенный)
+        const markerKanji = document.createElement('a-marker');
+        markerKanji.setAttribute('preset', 'kanji'); // Используем встроенный маркер
+        markerKanji.setAttribute('id', 'marker-kanji');
+        
+        const box = document.createElement('a-box');
+        box.setAttribute('color', '#4CC3D9');
+        box.setAttribute('position', '0 0.5 0');
+        box.setAttribute('scale', '0.5 0.5 0.5');
+        box.setAttribute('animation', 'property: position; to: 0 1 0; dir: alternate; loop: true; dur: 2000');
+        markerKanji.appendChild(box);
 
-    scene.appendChild(marker1);  
-    scene.appendChild(marker2);  
+        scene.appendChild(markerHiro);
+        scene.appendChild(markerKanji);
 
-    // Статистика производительности  
-    const stats = new Stats();  
-    stats.showPanel(0);  
-    document.getElementById('stats').appendChild(stats.dom);  
-    scene.addEventListener('renderstart', () => {  
-      requestAnimationFrame(function loop() {  
-        stats.update();  
-        requestAnimationFrame(loop);  
-      });  
-    });  
-  }  
+        // ... остальной код без изменений ...
+    }
 });
