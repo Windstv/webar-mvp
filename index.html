@@ -1,0 +1,17 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+  <title>WebAR MVP Test</title>  
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>  
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>  
+  <script src="scene.js"></script>  
+  <link rel="stylesheet" href="styles.css">  
+</head>  
+<body>  
+  <a-scene embedded arjs="debugUIEnabled: false">  
+    <!-- Маркеры добавляются через scene.js -->  
+    <a-camera gps-camera rotation-reader></a-camera>  
+  </a-scene>  
+  <div id="stats"></div> <!-- Для метрик производительности -->  
+</body>  
+</html>
